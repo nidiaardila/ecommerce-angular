@@ -1,1 +1,26 @@
-<p>card works!</p>
+<div class="p-4 mt-2 mb-6 overflow-hidden rounded-b-lg shadow-none hover:shadow-xl">
+  <a>
+    <img
+    class="w-full transition duration-500 transform hover:scale-105"
+    src="{{product().image}}"
+    alt="{{product().title}} "/>
+  </a>
+
+    <div class="mt-4">
+      <h3 class="mb-1 text-xs tracking-widest text-gray-500 title-font">
+        {{ product().category }}
+      </h3>
+      <h2 class="py-4 text-lg font-medium text-gray-900 title-font">
+        <a>{{ product().title | slice : 0 : 30 }}</a>
+      </h2>
+       <div class="flex items-center justify-between mt-1">
+         <p class="text-2xl font-bold text-black-500">{{ product().price | currency }}</p>
+        <button class="px-2 py-1 text-white bg-green-500 rounded hover:bg-green-700">
+         Add to cart
+        </button>
+       </div>
+    </div>
+</div>
+
+<!-- se utiliza product().title para acceder a las propiedades porque estamos trabajando con signal, sin signal se utiliza
+product.title -->
