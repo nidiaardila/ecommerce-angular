@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CardComponent } from './card/card.component';
 import { ProductsService } from '../../services/products.service';
+import { CartStore } from '../../shared/store/shopping-cart.store';
+import { Product } from '../../shared/model/product.interface';
 
 @Component({
   selector: 'app-products',
@@ -12,5 +14,10 @@ import { ProductsService } from '../../services/products.service';
 export class ProductsComponent {
   private readonly _productService = inject(ProductsService);
   products = this._productService.products;
+  cartStore = inject(CartStore);
+
+  onAddToCart(product : Product): void {
+    this.cartStore.addToCart(product);
+  }
 
 }
