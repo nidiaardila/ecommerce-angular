@@ -1,7 +1,8 @@
 import { computed, inject } from '@angular/core';
 import { patchState, signalStore, withComputed, withMethods, withState,} from '@ngrx/signals';
 import { Product } from '../model/product.interface';
-// import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
+
 
 export interface CartStore {
   products: Product[];
@@ -22,8 +23,8 @@ export const CartStore = signalStore(
     productsCount: computed(() => calculateProductCount(products())),
     totalAmount: computed(() => calculateTotalAmount(products())),
   })),
-  // withMethods(({ products, ...store }, toastSvc = inject(ToastrService)) => ({
-    withMethods(({ products, ...store }) => ({
+  withMethods(({ products, ...store }, toastService = inject(ToastrService)) => ({
+    // withMethods(({ products, ...store }) => ({
     addToCart(product: Product) {
       const isProductInCart = products().find(
         (item: Product) => item.id === product.id
@@ -36,18 +37,18 @@ export const CartStore = signalStore(
       } else {
         patchState(store, { products: [...products(), product] });
       }
-      // toastSvc.success('Product added', 'Ecommerce NAP');
+      toastService.success('Product added', 'Ecommerce NAP');
     },
 
     removeFromCart(id: number) {
       const updatedProducts = products().filter((product) => product.id !== id);
       patchState(store, { products: updatedProducts });
-      // toastSvc.info('Product removed', 'Ecommerce NAP');
+      toastService.info('Product removed', 'Ecommerce NAP');
     },
 
     clearCart() {
       patchState(store, initialState);
-      // toastSvc.info('Cart cleared', 'Ecommerce NAP');
+      toastService.info('Cart cleared', 'Ecommerce NAP');
     },
     
   }))
